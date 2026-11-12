@@ -40,8 +40,9 @@ No Antigravity, os comandos são skills: digite `/<nome>`.
 
 | Comando | O que faz |
 |---|---|
+| `/ajuda [tema]` | Explica os comandos, os subagentes e o fluxo típico |
 | `/git` | Pergunta o que fazer: abrir branch, commitar, abrir PR ou fechar branch (também entrega e hotfix) |
-| `/commit [texto]` | Commita direto, em Conventional Commits em português; não faz push; bloqueia em `main`/`develop` |
+| `/commit [texto]` | Commita em Conventional Commits perguntando só o idioma (português ou inglês); não faz push; na `main`/`develop` só com motivo explicado |
 | `/revisar [PR\|branch\|caminho] [--publicar]` | Aciona o subagente `code-reviewer`; com `--publicar`, comenta no PR (nunca aprova) |
 | `/session [obs]` | Salva o registro da sessão em `docs/sessoes/` |
 
@@ -88,6 +89,7 @@ Regras comuns: imparciais e rigorosos (bloqueante × sugestão × preferência, 
 - Cursos: só bacharelado (sem licenciatura/tecnológico), há presencial e EaD; RF003 mantém Modalidade, Área da saúde e DCN.
 - Checklist único por período com etiquetas de curso (v5, RF009). Substitui a regra anterior de modelo institucional aplicado curso a curso.
 
+- **`main` protegida no GitHub** (administradores podem passar por cima). Commit direto na `main` só se o desenvolvedor (qualquer um, inclusive quem assumir; precisa ser Admin no repositório) explicar o motivo, registrado no corpo do commit. `develop` sem proteção; fluxo por PR por combinado.
 - **Autoria só do desenvolvedor:** nenhuma IA (Gemini, Claude ou outra) aparece como autora ou coautora em commits, PRs ou comentários.
 
 ## Manutenção

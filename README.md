@@ -33,7 +33,7 @@ Diagramas e detalhes: [`docs/README.md`](docs/README.md#arquitetura-do-sistema).
 
 - `main` = produção; `develop` = integração.
 - Toda mudança sai da `develop` numa branch `tipo/descricao` (ex: `feat/cadastro-periodos`) e volta por **pull request**, com CI verde e aprovação de outro desenvolvedor.
-- Commits em **português** no padrão [Conventional Commits](https://www.conventionalcommits.org/pt-br/), com o tipo em inglês: `feat(estrutura): cria cadastro de períodos`.
+- Commits em **português ou inglês** (o `/commit` pergunta), no padrão [Conventional Commits](https://www.conventionalcommits.org/pt-br/), com o tipo em inglês: `feat(estrutura): cria cadastro de períodos`.
 - Hotfix sai da `main`. A entrega é um PR `develop → main`.
 
 Detalhes nas skills `git` e `commit`.
@@ -42,7 +42,9 @@ Detalhes nas skills `git` e `commit`.
 
 O repositório já vem configurado para dois assistentes, com o mesmo conteúdo:
 
-- **Claude Code:** `CLAUDE.md` + `.claude/` (agentes, skills e os comandos `/git`, `/commit`, `/revisar`, `/session`).
+- **Claude Code:** `CLAUDE.md` + `.claude/` (agentes, skills e os comandos `/ajuda`, `/git`, `/commit`, `/revisar`, `/session`).
+
+**Perdido? Digite `/ajuda`** para ver os comandos, os agentes e o fluxo de trabalho.
 - **Google Antigravity:** `AGENTS.md` + `.agents/` (rules, skills e agents).
 
 Toda mudança num lado deve ser repetida no outro.

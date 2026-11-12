@@ -35,8 +35,9 @@ docs/
 
 | Comando | O que faz | Skill |
 |---|---|---|
+| `/ajuda [tema]` | Explica os comandos, os agentes e o fluxo típico; com tema, detalha um comando, agente ou tarefa | `.claude/skills/ajuda/` |
 | `/git` | Pergunta o que fazer: abrir branch, commitar, abrir PR ou fechar branch (também entrega e hotfix pelo “Outro”) | `.claude/skills/git/` |
-| `/commit [texto]` | Commita direto, sem perguntas, em Conventional Commits em português; não faz push; bloqueia em `main`/`develop` | `.claude/skills/commit/` |
+| `/commit [texto]` | Commita em Conventional Commits perguntando só o idioma (português ou inglês); não faz push; na `main`/`develop` só com motivo explicado | `.claude/skills/commit/` |
 | `/revisar [PR\|branch\|caminho] [--publicar]` | Aciona o agente `code-reviewer`; com `--publicar`, comenta no PR (nunca aprova) | `.claude/skills/revisar/` |
 | `/session [obs]` | Salva o registro da sessão (onde parou, o que foi feito, próximos passos) na memória do projeto | `.claude/skills/session/` |
 
@@ -83,7 +84,7 @@ Regras comuns aos agentes de desenvolvimento: imparciais e rigorosos (bloqueante
 
 - IDs estáveis: `RF001`, `RNF001`, `RN001`. Nunca renumerar; removidos ficam `[CANCELADO]`.
 - Todo requisito cita a fonte; inferências marcadas `[SUPOSIÇÃO]`; nada inventado.
-- Código: domínio em português sem acento (igual ao glossário), termos técnicos em inglês; commits e PRs em português (tipo do Conventional Commits em inglês); branches `tipo/descricao` saindo da `develop`.
+- Código: domínio em português sem acento (igual ao glossário), termos técnicos em inglês; commits e PRs em português ou inglês, à escolha do desenvolvedor (o `/commit` pergunta; tipo do Conventional Commits sempre em inglês); branches `tipo/descricao` saindo da `develop`.
 - **Autoria só do desenvolvedor:** nenhuma IA (Claude ou outra) aparece como autora ou coautora em commits, PRs ou comentários. `.claude/settings.json` desliga a atribuição automática (`attribution.commit`/`pr` vazios, `sessionUrl: false`).
 
 ## Manutenção deste arquivo
@@ -110,6 +111,7 @@ Regras comuns aos agentes de desenvolvimento: imparciais e rigorosos (bloqueante
 - Arquitetura **definida**: Java, monolito modular com **Clean Architecture** em cada módulo, um repositório, frontend Thymeleaf em módulo separado, code review + clean code + testes no CI. **Sugestões iniciais, que o próximo dev pode trocar**: Java 21, Spring Boot + Maven, PostgreSQL (Flyway), MinIO (S3), JUnit/Testcontainers/Modulith ou ArchUnit/Spotless/Checkstyle. Em aberto: login CESMAC (TI), hospedagem/CI.
 - **Prints do Miro são só exemplo** para entender o fluxo, **não são o design** (usuário, 12/11/2026).
 - Cursos: só bacharelado (sem licenciatura/tecnológico), há presencial e EaD; RF003 mantém Modalidade, Área da saúde e DCN.
+- **`main` protegida no GitHub** (PR com 1 aprovação, sem force push/exclusão; administradores podem passar por cima). **Commit direto na `main` só se o desenvolvedor explicar o motivo** (vale para quem assumir o projeto, que precisa ser Admin no repositório); o motivo vai no corpo do commit (`Direto na main: …`). `develop` sem proteção, fluxo por PR por combinado (usuário, 12/11/2026).
 - Checklist único por período com etiquetas de curso (v5, RF009). Substitui a regra anterior de modelo institucional aplicado curso a curso.
 
 ## Histórico
@@ -173,3 +175,9 @@ Regras comuns aos agentes de desenvolvimento: imparciais e rigorosos (bloqueante
 - **2026-11-12** — Usuário: **nenhuma IA aparece como colaboradora**, só o desenvolvedor. Criado `.claude/settings.json` com a atribuição do Claude Code desligada; regra de autoria nas skills `commit` e `git` (Claude e Antigravity), em `.agents/rules/` e no `AGENTS.md`.
 
 - **2026-11-12** — Repositório criado: `git@github.com:Alancfops/forms-MEC.git`. Commit inicial direto na `main` (exceção autorizada pelo usuário, sem PR) e `develop` criada a partir dela. README da raiz e `.gitignore` criados. Gerador do .docx sem caminhos absolutos (`build.py`/`gerar.sh` relativos à pasta), saída conferida idêntica.
+
+- **2026-11-12** — Usuário decidiu **não proteger** `main`/`develop` no GitHub. Skill `git` (passo 3 da configuração inicial), `docs/README.md` e `docs/prd.md` ajustados; o fluxo por PR continua como combinado.
+
+- **2026-11-12** — Usuário reconsiderou: **`main` protegida** no GitHub (aplicado via API, admin pode passar por cima), e o Claude permite commit direto na `main` quando o desenvolvedor explica o porquê. Seção “Exceção” na skill `git`, bloqueio da skill `commit` ajustado; `develop` segue sem proteção.
+
+- **2026-11-12** — Novo comando **`/ajuda`** (Claude e Antigravity): explica comandos, agentes e fluxo típico, para quem assumir. `/commit` agora **pergunta o idioma** da mensagem (português ou inglês; pula se já indicado no comando, ex: `/commit en`, ou já respondido na conversa); tipo continua em inglês. Commit direto na `main` vale também para quem assumir, com motivo explicado e permissão Admin.

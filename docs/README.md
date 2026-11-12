@@ -62,7 +62,7 @@ docs/
 | Telas | **Thymeleaf + htmx**, cores do projeto **branco, azul e amarelo** + **semafóricas** (verde, amarelo, vermelho) só para estados (mudar cor exige aprovação), **WCAG 2 nível AA**, **mobile first** (skill `.claude/skills/frontend/`) |
 | Repositório | **Um só** (monorepo), com o backend e o frontend em pastas separadas |
 | Frontend | **Thymeleaf** (telas geradas pelo servidor), em módulo próprio, separado das regras de negócio |
-| Qualidade | **Code review** obrigatório (PR com aprovação, `main` protegida), **clean code** e **testes** executados no CI a cada PR |
+| Qualidade | **Code review** obrigatório (PR com aprovação; `main` protegida no GitHub, com exceção justificada pelo desenvolvedor), **clean code** e **testes** executados no CI a cada PR |
 
 ### Sugestões iniciais (podem ser trocadas)
 
@@ -110,7 +110,7 @@ Ainda a decidir:
 
 - `main` = produção; `develop` = integração. Ninguém faz commit direto nelas.
 - Cada funcionalidade ou correção nasce numa branch `tipo/descricao` saindo da `develop` (ex: `feat/cadastro-de-periodos`, `fix/upload-pdf-grande`).
-- Commits **em português** no padrão **Conventional Commits** (`feat(estrutura): cria cadastro de períodos`), com `Refs: RF00X` quando ligado a um requisito.
+- Commits **em português ou inglês** (o desenvolvedor escolhe; o `/commit` pergunta) no padrão **Conventional Commits** (`feat(estrutura): cria cadastro de períodos`), com `Refs: RF00X` quando ligado a um requisito.
 - Ao terminar, abre-se um **PR para a `develop`** no GitHub. Ele só entra com o CI verde e a aprovação de outro desenvolvedor (merge com squash).
 - Entrega: PR `develop → main`. Bug urgente: branch `hotfix/` saindo da `main`, com PR para a `main` e depois para a `develop`.
 
@@ -118,7 +118,7 @@ O passo a passo completo e a configuração inicial do GitHub estão na skill `.
 
 Os padrões de clean code, testes e code review, e um CI de exemplo, estão na skill `.claude/skills/qualidade-codigo/`.
 
-**Agentes de IA:** quem usa o Claude Code tem tudo em `CLAUDE.md` e `.claude/`. Quem usa o Google Antigravity (ou outra ferramenta que lê `AGENTS.md`) tem a mesma configuração em `AGENTS.md` e `.agents/`. Os comandos `/git`, `/commit`, `/revisar` e `/session` existem nas duas.
+**Agentes de IA:** quem usa o Claude Code tem tudo em `CLAUDE.md` e `.claude/`. Quem usa o Google Antigravity (ou outra ferramenta que lê `AGENTS.md`) tem a mesma configuração em `AGENTS.md` e `.agents/`. Os comandos `/ajuda`, `/git`, `/commit`, `/revisar` e `/session` existem nas duas; comece pelo `/ajuda`.
 
 ### Visão lógica
 
@@ -247,7 +247,7 @@ O script usa como molde o documento do TCC (`.claude/gerador-docx/modelo-tcc.doc
 
 1. Validar o documento com a Fabiana e atualizar `pendencias.md` com as respostas.
 2. Fechar os itens “Ainda a decidir” da arquitetura.
-3. Criar a estrutura acima no repositório, o CI (build, testes e linter) e a proteção da `main` e da `develop`.
+3. Criar a estrutura acima no repositório, e o CI (build, testes e linter). A `main` já está protegida; a `develop`, não.
 4. Começar pelas telas de login, períodos e checklist (RF001–RF009), que são a base das outras.
 
 ## Para quem assume o projeto
