@@ -1,0 +1,28 @@
+# Java / Maven
+target/
+*.class
+*.log
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# Python (gerador do .docx)
+__pycache__/
+*.pyc
+
+# Sistema / editores
+.DS_Store
+*~
+.~lock.*#
+
+# Segredos e configuração local
+.env
+.env.*
+*.pem
+*.key
+.claude/settings.local.json

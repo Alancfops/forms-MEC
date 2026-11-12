@@ -1,0 +1,125 @@
+/*
+ * Tokens de design do sistema Fabiana.
+ * Duas famílias de cor:
+ *  - Cores do projeto (identidade): branco, azul e amarelo, em vários tons.
+ *  - Cores semafóricas (estado): verde = sucesso, amarelo = atenção, vermelho = erro/problema.
+ *    Valem só para comunicar estado, nunca como decoração ou identidade.
+ *
+ * NÃO altere valores nem adicione cores novas sem perguntar ao usuário e
+ * explicar o motivo (ver skill frontend, seção "Cores").
+ *
+ * Contrastes conferidos pela fórmula da WCAG 2 (mínimos AA: 4,5:1 para texto normal,
+ * 3:1 para texto grande, componentes de interface e indicador de foco).
+ */
+
+:root {
+  /* ---------- Paleta ---------- */
+  --branco: #ffffff;
+
+  --azul-50:  #eff5ff;
+  --azul-100: #dce8fb;
+  --azul-200: #b9cff2;
+  --azul-300: #8daee3;  /* decorativo: 2,26:1 no branco, NÃO usar em texto nem em borda de campo */
+  --azul-500: #2f63c4;  /* 5,67:1 no branco */
+  --azul-600: #1f4fa8;  /* 7,66:1 no branco */
+  --azul-700: #183f87;  /* 10,0:1 no branco */
+  --azul-800: #12306a;  /* 12,7:1 no branco */
+  --azul-900: #0c2150;  /* 15,6:1 com texto branco */
+  --azul-950: #08163a;  /* 17,7:1 no branco */
+  --azul-borda: #7d90b3; /* 3,22:1 no branco: bordas de campos e componentes */
+
+  --amarelo-50:  #fffbea;
+  --amarelo-100: #fff3c4;
+  --amarelo-300: #ffdf6b;
+  --amarelo-400: #ffd23f; /* destaque: só com texto escuro (azul-950: 12,3:1). 1,44:1 no branco */
+  --amarelo-500: #f5bd00; /* só com texto escuro (azul-950: 10,3:1) */
+  --amarelo-700: #8a6200; /* texto no branco: 5,49:1 */
+  --amarelo-800: #6b4b00; /* texto no branco: 7,98:1; no amarelo-100: 7,17:1 */
+
+  /* ---------- Semafóricas (só para estado) ---------- */
+  --verde-50:  #eaf7ee;
+  --verde-600: #1e7b3f;   /* 5,30:1 no branco */
+  --verde-700: #17642f;   /* 7,24:1 no branco; 6,56:1 no verde-50 */
+  --vermelho-50:  #fdecec;
+  --vermelho-600: #c42b2b; /* 5,63:1 no branco */
+  --vermelho-700: #a11f1f; /* 7,69:1 no branco; 6,73:1 no vermelho-50 */
+  /* Atenção usa os amarelos do projeto: fundo amarelo-100 + texto amarelo-800 (7,17:1). */
+
+  /* ---------- Papéis (use estes nos componentes, não a paleta direto) ---------- */
+  --cor-fundo: var(--branco);
+  --cor-superficie: var(--azul-50);          /* cards, cabeçalhos de tabela */
+  --cor-superficie-forte: var(--azul-100);
+  --cor-texto: var(--azul-950);              /* 17,7:1 no fundo; 16,2:1 na superfície */
+  --cor-texto-suave: var(--azul-700);        /* 10,0:1: textos secundários */
+  --cor-titulo: var(--azul-800);
+  --cor-link: var(--azul-600);               /* 7,66:1; sempre sublinhado */
+  --cor-borda: var(--azul-borda);
+  --cor-divisor: var(--azul-200);            /* só decorativo (linhas entre itens) */
+
+  --cor-primaria: var(--azul-600);           /* botão principal: texto branco 7,66:1 */
+  --cor-primaria-hover: var(--azul-700);
+  --cor-primaria-texto: var(--branco);
+
+  --cor-destaque: var(--amarelo-400);        /* chips de etiqueta, item selecionado: texto azul-950 */
+  --cor-destaque-texto: var(--azul-950);
+
+  --cor-cabecalho: var(--azul-900);          /* barra superior: texto branco 15,6:1 */
+  --cor-cabecalho-texto: var(--branco);
+  --cor-cabecalho-destaque: var(--amarelo-400); /* aba ativa no cabeçalho: 10,8:1 no azul-900 */
+
+  /* Estados (semáforo). A cor NUNCA é a única pista: sempre ícone + texto (WCAG 1.4.1). */
+  --cor-sucesso-fundo: var(--verde-50);      /* ✓ Validado, Concluído, "salvo com sucesso" */
+  --cor-sucesso-texto: var(--verde-700);     /* 6,56:1 no fundo */
+  --cor-sucesso-borda: var(--verde-600);
+  --cor-atencao-fundo: var(--amarelo-100);   /* ⏳ Enviado (aguardando revisão), Em andamento, avisos */
+  --cor-atencao-texto: var(--amarelo-800);   /* 7,17:1 no fundo */
+  --cor-atencao-borda: var(--amarelo-700);
+  --cor-erro-fundo: var(--vermelho-50);      /* ✕ Devolvido para ajuste, erros de formulário, nota em diligência (0–2) */
+  --cor-erro-texto: var(--vermelho-700);     /* 6,73:1 no fundo */
+  --cor-erro-borda: var(--vermelho-600);
+  --cor-info-fundo: var(--azul-50);          /* ℹ informações neutras */
+  --cor-info-texto: var(--azul-700);
+  --cor-neutro-fundo: var(--branco);         /* Pendente, NSA: contorno + texto */
+  --cor-neutro-texto: var(--azul-700);
+
+  /* Foco: anel duplo, visível no claro e no escuro (WCAG 2.4.7 e 2.4.13). */
+  --foco-anel: 0 0 0 2px var(--branco), 0 0 0 5px var(--azul-700);
+  --foco-anel-escuro: 0 0 0 2px var(--azul-900), 0 0 0 5px var(--amarelo-400);
+
+  /* ---------- Tipografia ---------- */
+  --fonte: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --texto-base: 1rem;      /* 16px: nunca menor no corpo do texto */
+  --texto-pequeno: 0.875rem;
+  --texto-h1: 1.5rem;
+  --texto-h2: 1.25rem;
+  --altura-linha: 1.5;
+
+  /* ---------- Espaços e tamanhos ---------- */
+  --espaco-1: 0.25rem;
+  --espaco-2: 0.5rem;
+  --espaco-3: 0.75rem;
+  --espaco-4: 1rem;
+  --espaco-6: 1.5rem;
+  --espaco-8: 2rem;
+  --alvo-toque: 2.75rem;   /* 44px: altura/largura mínima de botões e links de ação */
+  --raio: 0.5rem;
+  --largura-conteudo: 72rem;
+
+  /* Pontos de quebra (mobile first: estilos base = celular; @media (min-width) para crescer)
+     --bp-tablet: 40rem (640px)  --bp-desktop: 64rem (1024px) */
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --texto-h1: 2rem;
+    --texto-h2: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

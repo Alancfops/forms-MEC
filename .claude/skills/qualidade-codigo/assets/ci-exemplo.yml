@@ -1,0 +1,65 @@
+# Exemplo de CI para o sistema Fabiana (GitHub Actions).
+# Copie para .github/workflows/ci.yml e ajuste à stack real do projeto.
+# Supõe Maven Wrapper (./mvnw) e Java 21, que são sugestões iniciais do docs/README.md.
+# Testcontainers funciona nos runners ubuntu-latest, que já têm Docker.
+
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+  push:
+    branches: [develop, main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      # Formatação, lint, testes unitários, de integração e de arquitetura, e cobertura.
+      - name: Verificação completa
+        run: ./mvnw --batch-mode verify
+
+      - name: Relatórios de teste
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorios-de-teste
+          path: |
+            **/target/surefire-reports/
+            **/target/failsafe-reports/
+            **/target/site/jacoco/
+
+  titulo-do-pr:
+    # Confere se o título do PR segue Conventional Commits (vira o commit no squash).
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            refactor
+            test
+            docs
+            style
+            perf
+            build
+            ci
+            chore
+            release
