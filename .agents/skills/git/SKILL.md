@@ -1,11 +1,11 @@
 ---
 name: git
-description: Fluxo de trabalho Git do sistema Fabiana (/git) — pergunta o que fazer (abrir branch, commitar, abrir PR, fechar branch) e executa seguindo o fluxo main/develop, branches tipo/descricao saindo da develop, commits Conventional Commits em português ou inglês (o desenvolvedor escolhe), PR no GitHub com CI e aprovação de um desenvolvedor, e hotfix saindo da main. Use quando o usuário digitar /git e SEMPRE que for começar a implementar um requisito (RF), funcionalidade ou correção neste projeto, criar ou nomear branch, abrir PR, preparar entrega para a main, corrigir bug em produção, limpar branch depois do merge ou configurar o repositório/CI — mesmo que o pedido seja só "implementa o RF004" ou "sobe pra revisão".
+description: Fluxo de trabalho Git do sistema Fabiana (/git) — pergunta o que fazer (abrir branch, commitar, abrir PR, fechar branch) e executa seguindo o fluxo main/develop, branches tipo/descricao saindo da develop, commits Conventional Commits em português ou inglês (o desenvolvedor escolhe), PR no GitHub com CI (aprovação de outra pessoa opcional), e hotfix saindo da main. Use quando o usuário digitar /git e SEMPRE que for começar a implementar um requisito (RF), funcionalidade ou correção neste projeto, criar ou nomear branch, abrir PR, preparar entrega para a main, corrigir bug em produção, limpar branch depois do merge ou configurar o repositório/CI — mesmo que o pedido seja só "implementa o RF004" ou "sobe pra revisão".
 ---
 
 # /git – fluxo de trabalho Git do sistema Fabiana
 
-Este fluxo existe para que **todo código passe por revisão humana e pelo CI antes de chegar às branches compartilhadas**. A `main` e a `develop` são de todos: ninguém escreve nelas direto. Cada mudança nasce numa branch própria, vira um PR, passa no CI, é aprovada por um desenvolvedor e só então entra.
+Este fluxo existe para que **todo código passe por revisão humana e pelo CI antes de chegar às branches compartilhadas**. A `main` e a `develop` são de todos: ninguém escreve nelas direto. Cada mudança nasce numa branch própria, vira um PR, passa no CI e só então entra (revisão de outra pessoa é bem-vinda, mas não obrigatória: o autor pode fazer o merge do próprio PR).
 
 ## Ao ser chamada
 
@@ -106,7 +106,7 @@ Push e PR publicam o trabalho para a equipe. Se o usuário escolheu “Abrir PR�
 
    O corpo **não** leva assinatura de IA (nada de “🤖 Generated with …”, `Co-Authored-By` ou link de sessão): o autor do PR é só o desenvolvedor.
 
-4. **Mostre o link do PR e pare.** O PR só entra com **CI verde** e **aprovação de outro desenvolvedor**. **Quem faz o merge é o desenvolvedor que revisa, não o agente de IA.**
+4. **Mostre o link do PR e pare.** O PR só entra com **CI verde**. Aprovação de outra pessoa é opcional: o próprio autor pode fazer o merge. **Quem faz o merge é o desenvolvedor, nunca o agente de IA.**
 
 ### Depois de aberto
 
@@ -116,7 +116,7 @@ Push e PR publicam o trabalho para a equipe. Se o usuário escolheu “Abrir PR�
 
 ## Fechar branch
 
-Para depois que o PR foi **aprovado e mergeado** pelo revisor.
+Para depois que o PR foi **mergeado** pelo desenvolvedor.
 
 1. Confirme que o PR foi mergeado: `gh pr view <branch> --json state,mergedAt`. Se não foi, **não apague a branch**: avise o usuário e mostre o estado do PR.
 2. Volte para a develop e limpe:
@@ -138,7 +138,7 @@ Quando a `develop` tem um conjunto de funcionalidades prontas para produção:
 gh pr create --base main --head develop --title "release: <resumo da entrega>"
 ```
 
-No corpo, liste os PRs e RFs incluídos. O PR passa por CI e aprovação. Use **merge commit** (não squash) para preservar os commits da `develop`. Depois do merge, crie uma tag de versão se a equipe estiver versionando (ex: `v0.1.0`).
+No corpo, liste os PRs e RFs incluídos. O PR passa pelo CI. Use **merge commit** (não squash) para preservar os commits da `develop`. Depois do merge, crie uma tag de versão se a equipe estiver versionando (ex: `v0.1.0`).
 
 ## Hotfix
 
@@ -156,19 +156,18 @@ Depois do merge na `main`, leve a correção para a `develop` com um PR `main �
 
 ## Exceção: commit direto na `main`
 
-A `main` é protegida no GitHub (PR com 1 aprovação, sem force push, sem apagar), mas **administradores podem passar por cima**. Por isso a regra também vale para você:
+A `main` é protegida no GitHub (PR obrigatório, sem aprovação mínima, sem force push, sem apagar), mas **o dono do repositório pode passar por cima**. Por isso a regra também vale para você:
 
 - **Não commite nem faça push direto na `main` por conta própria.** O caminho normal é branch → PR.
 - **Se o desenvolvedor pedir para ir direto na `main`, pergunte o motivo** (se ele ainda não disse). Com um motivo explicado (ex: “commit inicial do repositório”, “corrigir o README que quebrou o link”), **permita**: faça o commit no padrão Conventional Commits e registre o motivo no corpo, numa linha `Direto na main: <motivo>`.
 - **Sem motivo, não faça.** Explique que a `main` é protegida e ofereça abrir a branch.
 - Depois de um commit direto na `main`, leve-o para a `develop` também (`git switch develop && git merge --ff-only main`, ou `git merge main` se não der fast-forward) para as duas não divergirem.
-- **Vale para qualquer desenvolvedor do projeto**, inclusive quem assumir no lugar do autor original: com motivo explicado, pode. Para o GitHub aceitar o push, a pessoa precisa ter permissão **Admin** no repositório.
+- **Vale para qualquer desenvolvedor do projeto**, inclusive quem assumir no lugar do autor original: com motivo explicado, pode. Para o GitHub aceitar o push direto, a pessoa precisa ser dona do repositório (em repositório pessoal o colaborador só tem `write`); colaborador faz pelo PR, que ele mesmo pode mergear.
 - A `develop` não tem proteção no GitHub: o fluxo por branch e PR continua o combinado, e a mesma exceção (motivo explicado) vale para ela.
 
 ## O que não fazer, e por quê
 
 - **Commit ou push direto na `main` ou na `develop` sem motivo explicado pelo desenvolvedor:** pula a revisão e o CI, que são o motivo do fluxo existir. Se perceber que está numa delas com mudanças, crie a branch a partir dali antes de commitar (exceção acima).
-- **Merge do próprio PR:** a aprovação tem que vir de outra pessoa.
 - **`push --force` em `main` ou `develop`:** apaga o trabalho dos outros.
 - **Misturar assuntos num PR:** dificulta a revisão e o rastreio de requisito.
 - **Desligar ou pular testes para o CI passar:** esconde o problema em vez de resolver.
@@ -180,7 +179,7 @@ Se o repositório ainda não estiver configurado assim, ajude o usuário com est
 
 1. Criar a `develop` a partir da `main` e enviá-la: `git switch -c develop && git push -u origin develop`.
 2. Definir a `develop` como branch padrão no GitHub, para os PRs já abrirem contra ela.
-3. Proteger só a `main` (*Settings → Branches*): exigir PR com 1 aprovação, bloquear force push e exclusão, **sem** “Do not allow bypassing” (administradores podem passar por cima, para a exceção justificada). Quando houver CI, exigir também o check passando. A `develop` fica sem proteção (decisão do usuário, 12/11/2026).
+3. Proteger só a `main` (*Settings → Branches*): exigir PR **sem aprovação mínima** (o autor pode mergear o próprio PR, para o projeto não depender de uma segunda pessoa; decisão do usuário, 16/11/2026), bloquear force push e exclusão, **sem** “Do not allow bypassing” (o dono pode passar por cima, para a exceção justificada). Quando houver CI, exigir também o check passando. A `develop` fica sem proteção (decisão do usuário, 12/11/2026).
 4. Em *Settings → General → Pull Requests*: permitir *squash merge* (feature → develop) e *merge commit* (develop → main), e ativar *Automatically delete head branches*.
 5. Criar o CI em `.github/workflows/` (exemplo em `qualidade-codigo/assets/ci-exemplo.yml`).
 6. Opcional: `.github/pull_request_template.md` com o corpo do PR acima.

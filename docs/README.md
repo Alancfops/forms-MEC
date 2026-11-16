@@ -62,7 +62,7 @@ docs/
 | Telas | **Thymeleaf + htmx**, cores do projeto **branco, azul e amarelo** + **semafóricas** (verde, amarelo, vermelho) só para estados (mudar cor exige aprovação), **WCAG 2 nível AA**, **mobile first** (skill `.claude/skills/frontend/`) |
 | Repositório | **Um só** (monorepo), com o backend e o frontend em pastas separadas |
 | Frontend | **Thymeleaf** (telas geradas pelo servidor), em módulo próprio, separado das regras de negócio |
-| Qualidade | **Code review** obrigatório (PR com aprovação; `main` protegida no GitHub, com exceção justificada pelo desenvolvedor), **clean code** e **testes** executados no CI a cada PR |
+| Qualidade | **Code review** (PR obrigatório na `main`, sem aprovação mínima: o autor pode mergear o próprio PR; `/revisar` disponível; exceção de commit direto justificada pelo desenvolvedor), **clean code** e **testes** executados no CI a cada PR |
 
 ### Sugestões iniciais (podem ser trocadas)
 

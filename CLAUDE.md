@@ -65,7 +65,7 @@ Regras comuns aos agentes de desenvolvimento: imparciais e rigorosos (bloqueante
 
 ## Como trabalhar aqui
 
-- **Implementar um RF:** abrir branch (`/git`) → delegar ao `backend-senior` e/ou `frontend-senior` → `/commit` → `/git` abrir PR → o desenvolvedor pede `/revisar` se quiser → aprovação e merge **por um humano** → `/git` fechar branch.
+- **Implementar um RF:** abrir branch (`/git`) → delegar ao `backend-senior` e/ou `frontend-senior` → `/commit` → `/git` abrir PR → o desenvolvedor pede `/revisar` se quiser → merge **por um humano** (aprovação de outra pessoa opcional) → `/git` fechar branch.
 - **Revisão de código:** só quando o desenvolvedor digitar `/revisar`. Não acione o `code-reviewer` por iniciativa própria.
 - **Requisitos:** levantamento completo pelo agente `engenheiro-requisitos`; ajustes pontuais com a skill `especialista-requisitos-uml`. Dúvidas de negócio vão para `docs/requisitos/pendencias.md`, nunca são inventadas.
 - **Alterar o documento de requisitos:** edite `.claude/gerador-docx/conteudo.py` e rode `.claude/gerador-docx/gerar.sh` (nunca editar o .docx à mão).
@@ -111,7 +111,7 @@ Regras comuns aos agentes de desenvolvimento: imparciais e rigorosos (bloqueante
 - Arquitetura **definida**: Java, monolito modular com **Clean Architecture** em cada módulo, um repositório, frontend Thymeleaf em módulo separado, code review + clean code + testes no CI. **Sugestões iniciais, que o próximo dev pode trocar**: Java 21, Spring Boot + Maven, PostgreSQL (Flyway), MinIO (S3), JUnit/Testcontainers/Modulith ou ArchUnit/Spotless/Checkstyle. Em aberto: login CESMAC (TI), hospedagem/CI.
 - **Prints do Miro são só exemplo** para entender o fluxo, **não são o design** (usuário, 12/11/2026).
 - Cursos: só bacharelado (sem licenciatura/tecnológico), há presencial e EaD; RF003 mantém Modalidade, Área da saúde e DCN.
-- **`main` protegida no GitHub** (PR com 1 aprovação, sem force push/exclusão; administradores podem passar por cima). **Commit direto na `main` só se o desenvolvedor explicar o motivo** (vale para quem assumir o projeto, que precisa ser Admin no repositório); o motivo vai no corpo do commit (`Direto na main: …`). `develop` sem proteção, fluxo por PR por combinado (usuário, 12/11/2026).
+- **`main` protegida no GitHub** (PR obrigatório **sem aprovação mínima**, sem force push/exclusão; o dono pode passar por cima). O próximo desenvolvedor (colaborador `write`, já que o repositório é pessoal e não aceita Admin para colaborador) **mergeia os próprios PRs** sem depender do autor original (usuário, 16/11/2026). **Commit direto na `main` só se o desenvolvedor explicar o motivo** (exige ser dono do repositório); o motivo vai no corpo do commit (`Direto na main: …`). `develop` sem proteção, fluxo por PR por combinado (usuário, 12/11/2026).
 - Checklist único por período com etiquetas de curso (v5, RF009). Substitui a regra anterior de modelo institucional aplicado curso a curso.
 
 ## Histórico
@@ -181,3 +181,5 @@ Regras comuns aos agentes de desenvolvimento: imparciais e rigorosos (bloqueante
 - **2026-11-12** — Usuário reconsiderou: **`main` protegida** no GitHub (aplicado via API, admin pode passar por cima), e o Claude permite commit direto na `main` quando o desenvolvedor explica o porquê. Seção “Exceção” na skill `git`, bloqueio da skill `commit` ajustado; `develop` segue sem proteção.
 
 - **2026-11-12** — Novo comando **`/ajuda`** (Claude e Antigravity): explica comandos, agentes e fluxo típico, para quem assumir. `/commit` agora **pergunta o idioma** da mensagem (português ou inglês; pula se já indicado no comando, ex: `/commit en`, ou já respondido na conversa); tipo continua em inglês. Commit direto na `main` vale também para quem assumir, com motivo explicado e permissão Admin.
+
+- **2026-11-16** — PseravaT convidado como colaborador (`write`; repositório pessoal não permite Admin para colaborador). Para ele não depender do autor original, a proteção da `main` passou a exigir PR com **0 aprovações**: ele mesmo faz o merge. Skill `git` (Claude e Antigravity), regra do Antigravity, `docs/README.md` e `AGENTS.md` ajustados.
